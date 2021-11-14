@@ -1,19 +1,19 @@
-'use strict';
-const express = require('express');
-const http = require('http');
-const io = require('socket.io');
-const cors = require('cors');
+"use strict";
+const express = require("express");
+const http = require("http");
+const io = require("socket.io");
+const cors = require("cors");
 
 const FETCH_INTERVAL = 5000;
 const PORT = process.env.PORT || 4000;
 
 const tickers = [
-  'AAPL', // Apple
-  'GOOGL', // Alphabet
-  'MSFT', // Microsoft
-  'AMZN', // Amazon
-  'FB', // Facebook
-  'TSLA', // Tesla
+  "AAPL", // Apple
+  "GOOGL", // Alphabet
+  "MSFT", // Microsoft
+  "AMZN", // Amazon
+  "FB", // Facebook
+  "TSLA", // Tesla
 ];
 
 function randomValue(min = 0, max = 1, precision = 0) {
@@ -23,14 +23,20 @@ function randomValue(min = 0, max = 1, precision = 0) {
 
 function utcDate() {
   const now = new Date();
-  return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+  return new Date(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    now.getUTCHours(),
+    now.getUTCMinutes(),
+    now.getUTCSeconds()
+  );
 }
 
 function getQuotes(socket) {
-
-  const quotes = tickers.map(ticker => ({
+  const quotes = tickers.map((ticker) => ({
     ticker,
-    exchange: 'NASDAQ',
+    exchange: "NASDAQ",
     price: randomValue(100, 300, 2),
     change: randomValue(0, 200, 2),
     change_percent: randomValue(0, 1, 2),
@@ -39,7 +45,7 @@ function getQuotes(socket) {
     last_trade_time: utcDate(),
   }));
 
-  socket.emit('ticker', quotes);
+  socket.emit("ticker", quotes);
 }
 
 function trackTickers(socket) {
@@ -47,11 +53,11 @@ function trackTickers(socket) {
   getQuotes(socket);
 
   // every N seconds
-  const timer = setInterval(function() {
+  const timer = setInterval(function () {
     getQuotes(socket);
   }, FETCH_INTERVAL);
 
-  socket.on('disconnect', function() {
+  socket.on("disconnect", function () {
     clearInterval(timer);
   });
 }
@@ -63,15 +69,15 @@ const server = http.createServer(app);
 const socketServer = io(server, {
   cors: {
     origin: "*",
-  }
+  },
 });
 
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
+// app.get('/', function(req, res) {
+//   res.sendFile(__dirname + '/index.html');
+// });
 
-socketServer.on('connection', (socket) => {
-  socket.on('start', () => {
+socketServer.on("connection", (socket) => {
+  socket.on("start", () => {
     trackTickers(socket);
   });
 });
