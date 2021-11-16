@@ -8,8 +8,6 @@ import {
   TableBody,
   Avatar,
   Typography,
-  Chip,
-  Divider,
 } from "@mui/material";
 import nasdaq from "../../assets/nasdaq.png";
 import { changeTimeView } from "../../utils";
@@ -52,7 +50,7 @@ export const FinanceTable = ({ tickerData }) => {
             <ExpandableTableRow
               key={tickerItem.ticker}
               expandComponent={
-                <TableCell colSpan="5">
+                <TableCell colSpan="6">
                   <ExpandedRow
                     dividend={tickerItem?.dividend}
                     profitability={tickerItem?.yield}

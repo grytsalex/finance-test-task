@@ -10,12 +10,20 @@ export const ExpandableTableRow = ({
 
   return (
     <>
-      <TableRow onClick={() => setIsExpanded(!isExpanded)} {...otherProps}>
+      <TableRow
+        hover={true}
+        onClick={() => setIsExpanded(!isExpanded)}
+        {...otherProps}
+      >
         {children}
       </TableRow>
       {isExpanded && (
-        <TableRow>
-          <TableCell padding="checkbox" />
+        <TableRow
+          hover={true}
+          sx={{
+            backgroundColor: "#fafafa",
+          }}
+        >
           {expandComponent}
         </TableRow>
       )}

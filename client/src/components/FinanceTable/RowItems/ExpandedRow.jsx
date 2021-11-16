@@ -8,7 +8,7 @@ export const ExpandedRow = memo((props) => {
     <Box
       style={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
       }}
     >
       <Chip label={`Dividend: ${dividend}`} />

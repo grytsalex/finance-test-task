@@ -1,4 +1,6 @@
 
+- Add visual effect to highlight positive/negative values
+
 # React Test Task
 
 ## Requirements
