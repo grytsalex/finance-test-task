@@ -1,5 +1,5 @@
 import React from "react";
-import { TableCell, TableRow } from "@mui/material";
+import { TableRow } from "@mui/material";
 
 export const ExpandableTableRow = ({
   children,
@@ -12,6 +12,7 @@ export const ExpandableTableRow = ({
     <>
       <TableRow
         hover={true}
+        sx={{ cursor: "pointer" }}
         onClick={() => setIsExpanded(!isExpanded)}
         {...otherProps}
       >

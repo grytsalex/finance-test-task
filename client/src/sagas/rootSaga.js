@@ -3,11 +3,11 @@ import { call, take, put } from "redux-saga/effects";
 import io from "socket.io-client";
 import { actionSetFinanceData } from "../actions";
 
-function createWebSocketConnection(url) {
+export function createWebSocketConnection(url) {
   return io.connect(url);
 }
 
-function createSocketChannel(socket) {
+export function createSocketChannel(socket) {
   return eventChannel((emitter) => {
     socket.emit("start");
 
@@ -31,6 +31,7 @@ function createSocketChannel(socket) {
 export function* rootSaga() {
   const socket = yield call(createWebSocketConnection, "http://localhost:4000");
   const socketChannel = yield call(createSocketChannel, socket);
+  console.log(socketChannel);
 
   while (true) {
     try {
