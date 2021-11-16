@@ -5,7 +5,6 @@ export const initialState = {
 };
 
 export const rootReducer = (state = initialState, action) => {
-
   const { type, payload } = action;
 
   switch (type) {
