@@ -11,11 +11,9 @@ import {
 } from "@mui/material";
 import nasdaq from "../../assets/nasdaq.png";
 import { changeTimeView } from "../../utils";
-import { Price, Percentage } from "./RowItems";
+import { Price, Percentage, ExpandableTableRow } from "./RowItems";
 
 export const FinanceTable = ({ tickerData }) => {
-  console.log(tickerData);
-
   return (
     <TableContainer
       component={Paper}
@@ -44,17 +42,16 @@ export const FinanceTable = ({ tickerData }) => {
             <TableCell align="right">Price</TableCell>
             <TableCell align="right">Change&nbsp;</TableCell>
             <TableCell align="right">Change percent&nbsp;</TableCell>
-            {/*<TableCell align="right">Dividend&nbsp;</TableCell>*/}
-            {/*<TableCell align="right">Yield&nbsp;</TableCell>*/}
             <TableCell align="right">Last trade time&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {tickerData?.map((tickerItem) => (
-            <TableRow
-              key={tickerItem?.ticker}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              onClick={() => console.log(tickerItem?.ticker)}
+            <ExpandableTableRow
+              key={tickerItem.ticker}
+              expandComponent={
+                <TableCell colSpan="5">{`Dividend: ${tickerItem?.dividend} Yield: ${tickerItem?.yield}`}</TableCell>
+              }
             >
               <TableCell
                 component="th"
@@ -83,12 +80,11 @@ export const FinanceTable = ({ tickerData }) => {
                   percent={tickerItem?.change_percent}
                 />
               </TableCell>
-              {/*<TableCell align="right">{tickerItem?.dividend}</TableCell>*/}
-              {/*<TableCell align="right">{tickerItem?.yield}</TableCell>*/}
+
               <TableCell align="right">
                 {changeTimeView(tickerItem?.last_trade_time)}
               </TableCell>
-            </TableRow>
+            </ExpandableTableRow>
           ))}
         </TableBody>
       </Table>
