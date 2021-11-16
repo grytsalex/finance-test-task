@@ -9,25 +9,27 @@ function createWebSocketConnection(url) {
 
 function createSocketChannel(socket) {
   return eventChannel((emitter) => {
+    socket.emit("start");
+
     const eventHandler = (data) => {
       emitter(data);
     };
 
-    // const errorHandler = (errorEvent) => {
-    //   emit(new Error(errorEvent.reason));
-    // };
+    const errorHandler = (errorEvent) => {
+      emitter(new Error(errorEvent.reason));
+    };
 
     socket.on("ticker", eventHandler);
+    socket.on("error", errorHandler);
 
     return () => {
-      socket.off("disconnect", () => console.log(socket.id));
+      socket.off("disconnect", eventHandler);
     };
   });
 }
 
 export function* rootSaga() {
   const socket = yield call(createWebSocketConnection, "http://localhost:4000");
-  socket.emit("start");
   const socketChannel = yield call(createSocketChannel, socket);
 
   while (true) {

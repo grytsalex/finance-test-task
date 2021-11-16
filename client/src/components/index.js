@@ -1,1 +1,2 @@
-export {FinanceTable } from './FinanceTable';
+export { FinanceTable } from "./FinanceTable";
+export { Loader } from "./Loader";

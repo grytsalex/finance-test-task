@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import {
   TableContainer,
   Table,
@@ -10,26 +9,12 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
-
-import { selectorGetFinanceData } from "../../selectors";
 import nasdaq from "../../assets/nasdaq.png";
+import { changeTimeView } from "../../utils";
+import { Price, Percentage } from "./RowItems";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-export const FinanceTable = () => {
-  const data = useSelector(selectorGetFinanceData);
-
-  console.log(data);
+export const FinanceTable = ({ tickerData }) => {
+  console.log(tickerData);
 
   return (
     <TableContainer
@@ -57,18 +42,19 @@ export const FinanceTable = () => {
             <TableCell>Exchange</TableCell>
             <TableCell>Ticker</TableCell>
             <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Change&nbsp;(g)</TableCell>
-            <TableCell align="right">change_percent&nbsp;(g)</TableCell>
-            <TableCell align="right">dividend&nbsp;(g)</TableCell>
-            <TableCell align="right">yield&nbsp;(g)</TableCell>
-            <TableCell align="right">last_trade_time&nbsp;(g)</TableCell>
+            <TableCell align="right">Change&nbsp;</TableCell>
+            <TableCell align="right">Change percent&nbsp;</TableCell>
+            {/*<TableCell align="right">Dividend&nbsp;</TableCell>*/}
+            {/*<TableCell align="right">Yield&nbsp;</TableCell>*/}
+            <TableCell align="right">Last trade time&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {tickerData?.map((tickerItem) => (
             <TableRow
-              key={row.name}
+              key={tickerItem?.ticker}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              onClick={() => console.log(tickerItem?.ticker)}
             >
               <TableCell
                 component="th"
@@ -81,18 +67,27 @@ export const FinanceTable = () => {
               >
                 <Avatar src={nasdaq} />
                 <Typography component="span" sx={{ ml: "5px" }}>
-                  Nasdaq
+                  {tickerItem?.exchange}
                 </Typography>
               </TableCell>
               <TableCell component="th" scope="row">
-                {row.calories}
+                {tickerItem?.ticker}
               </TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">
+                <Price amount={tickerItem?.price} />
+              </TableCell>
+              <TableCell align="right">{tickerItem?.change}$</TableCell>
+              <TableCell align="right">
+                <Percentage
+                  price={tickerItem?.price}
+                  percent={tickerItem?.change_percent}
+                />
+              </TableCell>
+              {/*<TableCell align="right">{tickerItem?.dividend}</TableCell>*/}
+              {/*<TableCell align="right">{tickerItem?.yield}</TableCell>*/}
+              <TableCell align="right">
+                {changeTimeView(tickerItem?.last_trade_time)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
