@@ -1,11 +1,10 @@
 import { testSaga } from "redux-saga-test-plan";
-import { call } from "redux-saga/effects";
 import {
   createSocketChannel,
   createWebSocketConnection,
   rootSaga,
 } from "../rootSaga";
-import { actionSetFinanceData } from "../../actions";
+import { actionSetFinanceData } from "../actions";
 
 describe("rootSaga", () => {
   describe("rootSaga", () => {
@@ -24,7 +23,11 @@ describe("rootSaga", () => {
     const url = "http://localhost:4000";
 
     const socket = {};
-    const socketChannel = { close: jest.fn() };
+    const socketChannel = {
+      close: jest.fn(),
+      flush: jest.fn(),
+      take: jest.fn(),
+    };
 
     it("- successful", () => {
       testSaga(rootSaga)
@@ -32,26 +35,27 @@ describe("rootSaga", () => {
         .call(createWebSocketConnection, url)
         .next(socket)
         .call(createSocketChannel, socket)
-        .next(socketChannel);
-      // .take(socketChannel)
-      // .next(payload);
-      // .put(actionSetFinanceData(payload))
-      // .next()
-      // .isDone();
+        .next(socketChannel)
+        .take(socketChannel)
+        .next(payload)
+        .put(actionSetFinanceData(payload))
+        .next()
+        .take(socketChannel)
+        .next();
     });
 
     it("- failed", () => {
+      const mockedError = new Error("socketChannel error");
       testSaga(rootSaga)
         .next()
         .call(createWebSocketConnection, url)
-        .next(socket);
-      // .call(createSocketChannel, socket)
-      // .next(socketChannel)
-      // .take(socketChannel)
-      // .next(payload);
-      // .throw(new TestError('Error'))
-      // .next()
-      // .isDone();
+        .next(socket)
+        .call(createSocketChannel, socket)
+        .next(socketChannel)
+        .take(socketChannel)
+        .throw(mockedError)
+        .next()
+        .isDone();
     });
   });
 });

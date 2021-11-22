@@ -1,27 +1,24 @@
+import { memo } from "react";
 import { Chip } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { usePrevious } from "../../../utils";
+import { arrowUp, arrowDown } from "./percentage.module.scss";
 
-export const Percentage = (props) => {
-  const prevPrice = usePrevious(props.price);
-
-  const isNewPriceBigger = prevPrice < props.price;
-
+export const Percentage = memo(({ isNewPriceBigger, percent }) => {
   return (
     <Chip
       icon={
         isNewPriceBigger ? (
-          <ArrowUpwardIcon sx={{ color: "green !important" }} />
+          <ArrowUpwardIcon className={arrowUp} />
         ) : (
-          <ArrowDownwardIcon sx={{ color: "red !important" }} />
+          <ArrowDownwardIcon className={arrowDown} />
         )
       }
-      label={`${props.percent}%`}
+      label={`${percent}%`}
       sx={{
         backgroundColor: isNewPriceBigger ? "#e6f4ea" : "#fce8e6",
         color: isNewPriceBigger ? "green" : "red",
       }}
     />
   );
-};
+});

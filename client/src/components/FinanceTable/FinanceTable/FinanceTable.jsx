@@ -9,32 +9,25 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
-import nasdaq from "../../assets/nasdaq.png";
-import { changeTimeView } from "../../utils";
-import { Price, Percentage, ExpandableTableRow, ExpandedRow } from "./RowItems";
+import nasdaq from "../../../assets/nasdaq.png";
+import { changeTimeView } from "../../../utils";
+import {
+  Price,
+  Percentage,
+  ExpandableTableRow,
+  ExpandedRow,
+} from "../RowItems";
+import {
+  tableContainer,
+  table,
+  exchangeTableCell,
+  exchangeText,
+} from "./financetable.module.scss";
 
 export const FinanceTable = ({ tickerData }) => {
   return (
-    <TableContainer
-      component={Paper}
-      sx={{
-        boxShadow: "none",
-        height: "100vh",
-        display: "flex",
-        alignItems: "center ",
-      }}
-    >
-      <Table
-        sx={{
-          minWidth: 650,
-          margin: "auto",
-          maxWidth: 1000,
-          borderSpacing: 0,
-          boxShadow: "0px 1px 5px 5px rgba(204, 204, 204, 0.5)",
-          borderRadius: "6px 6px 6px 6px",
-        }}
-        aria-label="finance table"
-      >
+    <TableContainer component={Paper} className={tableContainer}>
+      <Table className={table} aria-label="finance table">
         <TableHead>
           <TableRow>
             <TableCell>Exchange</TableCell>
@@ -59,16 +52,12 @@ export const FinanceTable = ({ tickerData }) => {
               }
             >
               <TableCell
+                className={exchangeTableCell}
                 component="th"
                 scope="row"
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
               >
                 <Avatar src={nasdaq} />
-                <Typography component="span" sx={{ ml: "5px" }}>
+                <Typography component="span" className={exchangeText}>
                   {tickerItem?.exchange}
                 </Typography>
               </TableCell>
@@ -76,13 +65,16 @@ export const FinanceTable = ({ tickerData }) => {
                 {tickerItem?.ticker}
               </TableCell>
               <TableCell align="right">
-                <Price amount={tickerItem?.price} />
+                <Price
+                  amount={tickerItem?.price}
+                  isNewPriceBigger={tickerItem?.isNewPriceBigger}
+                />
               </TableCell>
               <TableCell align="right">{tickerItem?.change}$</TableCell>
               <TableCell align="right">
                 <Percentage
-                  price={tickerItem?.price}
                   percent={tickerItem?.change_percent}
+                  isNewPriceBigger={tickerItem?.isNewPriceBigger}
                 />
               </TableCell>
 

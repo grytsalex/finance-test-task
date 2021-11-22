@@ -1,5 +1,5 @@
 import { initialState, rootReducer } from "../rootReducer";
-import { actionSetFinanceData } from "../../actions";
+import { actionSetFinanceData } from "../../sagas/actions";
 
 describe("rootReducer tests", () => {
   it("should return initial state", () => {

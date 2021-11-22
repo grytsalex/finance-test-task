@@ -1,4 +1,4 @@
-import { changeTimeView } from "../utils";
+import { changeTimeView } from "../index";
 
 describe("changeTimeView", () => {
   describe("changeTimeView", () => {

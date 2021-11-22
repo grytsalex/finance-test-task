@@ -1,0 +1,25 @@
+.tableContainer {
+  box-shadow: none;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.table {
+  min-width: 650px;
+  max-width: 1000px;
+  margin: auto;
+  box-shadow: 0 1px 5px 5px rgba(204, 204, 204, 0.5);
+  border-radius: 6px 6px 6px 6px;
+  border-spacing: 0;
+}
+
+.exchangeTableCell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.exchangeText {
+  margin-left: 5px;
+}

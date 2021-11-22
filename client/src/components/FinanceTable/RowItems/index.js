@@ -1,4 +1,4 @@
-export { Price } from "./Price";
-export { Percentage } from "./Percentage";
-export { ExpandableTableRow } from "./ExpandableTableRow";
-export { ExpandedRow } from "./ExpandedRow";
+export { Price } from "./Price/Price";
+export { Percentage } from "./Percentage/Percentage";
+export { ExpandableTableRow } from "./ExpandedTableRow/ExpandableTableRow";
+export { ExpandedRow } from "./ExpandedRow/ExpandedRow";

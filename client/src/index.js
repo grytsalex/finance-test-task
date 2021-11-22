@@ -9,7 +9,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { rootSaga } from "./sagas/rootSaga";
-import { rootReducer } from "./reducer/rootReducer";
+import { rootReducer } from "./redux/rootReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(

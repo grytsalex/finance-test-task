@@ -1,7 +1,7 @@
 import { eventChannel } from "redux-saga";
 import { call, take, put } from "redux-saga/effects";
 import io from "socket.io-client";
-import { actionSetFinanceData } from "../actions";
+import { actionSetFinanceData } from "./actions";
 
 export function createWebSocketConnection(url) {
   return io.connect(url);
@@ -23,7 +23,7 @@ export function createSocketChannel(socket) {
     socket.on("error", errorHandler);
 
     return () => {
-      socket.off("disconnect", eventHandler);
+      socket.emit("disconnect");
     };
   });
 }
@@ -31,15 +31,15 @@ export function createSocketChannel(socket) {
 export function* rootSaga() {
   const socket = yield call(createWebSocketConnection, "http://localhost:4000");
   const socketChannel = yield call(createSocketChannel, socket);
-  console.log(socketChannel);
 
   while (true) {
     try {
       const payload = yield take(socketChannel);
       yield put(actionSetFinanceData(payload));
-    } catch (err) {
-      console.error("socket error:", err);
+    } catch (error) {
+      console.error("socketChannel error:", error);
       socketChannel.close();
+      break;
     }
   }
 }
