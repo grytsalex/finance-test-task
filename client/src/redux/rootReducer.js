@@ -19,7 +19,7 @@ export const rootReducer = (state = initialState, action) => {
 function setFinanceData(state, payload) {
   return {
     ...state,
-    data: !state.data.length
+    data: !state.data?.length
       ? payload
       : state.data.map((oldTicker) => {
           const currentTicker = payload.find(

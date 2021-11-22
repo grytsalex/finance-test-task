@@ -6,7 +6,7 @@ import { selectorGetFinanceData } from "./redux/selectors";
 function App() {
   const tickerData = useSelector(selectorGetFinanceData);
 
-  return !tickerData.length ? (
+  return !tickerData?.length ? (
     <Loader />
   ) : (
     <FinanceTable tickerData={tickerData} />

@@ -3,7 +3,7 @@ import { actionSetFinanceData } from "../../sagas/actions";
 
 describe("rootReducer tests", () => {
   it("should return initial state", () => {
-    expect(rootReducer({ data: null }, {})).toEqual(initialState);
+    expect(rootReducer({ data: [] }, {})).toEqual(initialState);
   });
 
   it("Should set array of tickers with payload", () => {
@@ -14,7 +14,7 @@ describe("rootReducer tests", () => {
       data: [],
     };
 
-    const actual = rootReducer({ data: null }, action);
+    const actual = rootReducer({ data: [] }, action);
 
     expect(actual).toEqual(expectedState);
   });
