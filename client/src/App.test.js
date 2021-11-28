@@ -1,63 +1,58 @@
-import { render, screen } from '@testing-library/react';
-import { shallow } from 'enzyme';
-import App from './App';
-import { ShallowMock } from './utils/ShallowMock'
-import { FinanceTable } from './components'
+import { mount } from "enzyme";
+import React from "react";
+import configureStore from "redux-mock-store";
+import { Provider } from "react-redux";
+import App from "./App";
 
-// const mockState = [ {
-//   change: "127.14",
-//   change_percent: "0.55",
-//   dividend: "0.18",
-//   exchange: "NASDAQ",
-//   last_trade_time: "2021-11-16T18:16:13.000Z",
-//   price: "289.32",
-//   ticker: "AAPL",
-//   yield: "1.85",
-// },]
+describe("With React Testing Library", () => {
+  const initialState = {
+    data: [],
+  };
+  const mockStore = configureStore();
+  let store;
 
-// jest.mock('react-redux', () => {
-//   const ActualReactRedux = jest.requireActual('react-redux');
-//   return {
-//       ...ActualReactRedux,
-//       useSelector: jest.fn().mockImplementation(() => {
-//           return mockState;
-//       }),
-//   };
-// });
+  it("expect render loader when state is empty array", () => {
+    store = mockStore(initialState);
+    const wrapper = mount(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    // console.log(wrapper.debug());
+    expect(wrapper.find(".loader").length).toBeGreaterThan(0);
+  });
 
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
+  it("expect not render element with tableContainer class when state is empty array", () => {
+    store = mockStore(initialState);
+    const wrapper = mount(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    expect(wrapper.find(".tableContainer").length).toBeLessThan(1);
+  });
 
-
-
-describe('Component: FooBar', () => {
-  let mockStore = [ {
-    change: "127.14",
-    change_percent: "0.55",
-    dividend: "0.18",
-    exchange: "NASDAQ",
-    last_trade_time: "2021-11-16T18:16:13.000Z",
-    price: "289.32",
-    ticker: "AAPL",
-    yield: "1.85",
-  },]
-
-	it('should render FinanceTable component when store with tickers', () => {
-		const component = shallow(
-			ShallowMock(<FinanceTable />, mockStore)
-		);
-		expect(component).toBeTruthy();
-	});
-
-  it('should render Loader component when store is empty', () => {
-    const component = shallow(
-			ShallowMock(<App />, mockStore)
-		);
-    console.log(component)
-    component.console.log()
-		expect(component).toBeTruthy();
-  })
+  it("expect render FinanceTable component when state contains ticker object", () => {
+    const initialState = {
+      data: [
+        {
+          change: "127.14",
+          change_percent: "0.55",
+          dividend: "0.18",
+          exchange: "NASDAQ",
+          last_trade_time: "2021-11-16T18:16:13.000Z",
+          price: "289.32",
+          ticker: "AAPL",
+          yield: "1.85",
+        },
+      ],
+    };
+    store = mockStore(initialState);
+    const wrapper = mount(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    expect(wrapper.find(".tableContainer").length).toBeGreaterThan(0);
+  });
 });
