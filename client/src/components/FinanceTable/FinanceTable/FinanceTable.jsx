@@ -17,17 +17,12 @@ import {
   ExpandableTableRow,
   ExpandedRow,
 } from "../RowItems";
-import {
-  tableContainer,
-  table,
-  exchangeTableCell,
-  exchangeText,
-} from "./financetable.module.scss";
+import styles from "./financetable.module.scss"
 
 export const FinanceTable = ({ tickerData }) => {
   return (
-    <TableContainer component={Paper} className={tableContainer}>
-      <Table className={table} aria-label="finance table">
+    <TableContainer component={Paper} className={styles.tableContainer}>
+      <Table className={styles.table} aria-label="finance table">
         <TableHead>
           <TableRow>
             <TableCell>Exchange</TableCell>
@@ -52,12 +47,12 @@ export const FinanceTable = ({ tickerData }) => {
               }
             >
               <TableCell
-                className={exchangeTableCell}
+                className={styles.exchangeTableCell}
                 component="th"
                 scope="row"
               >
                 <Avatar src={nasdaq} />
-                <Typography component="span" className={exchangeText}>
+                <Typography component="span" className={styles.exchangeText}>
                   {tickerItem?.exchange}
                 </Typography>
               </TableCell>

@@ -1,6 +1,6 @@
 import React from "react";
 import { TableRow } from "@mui/material";
-import { row, expandedRow } from "./tablerow.module.scss";
+import styles from "./tablerow.module.scss";
 
 export const ExpandableTableRow = ({
   children,
@@ -13,14 +13,14 @@ export const ExpandableTableRow = ({
     <>
       <TableRow
         hover={true}
-        className={row}
+        className={styles.row}
         onClick={() => setIsExpanded(!isExpanded)}
         {...otherProps}
       >
         {children}
       </TableRow>
       {isExpanded && (
-        <TableRow className={expandedRow}>{expandComponent}</TableRow>
+        <TableRow className={styles.expandedRow}>{expandComponent}</TableRow>
       )}
     </>
   );

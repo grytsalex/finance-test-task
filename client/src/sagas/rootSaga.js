@@ -37,7 +37,6 @@ export function* rootSaga() {
       const payload = yield take(socketChannel);
       yield put(actionSetFinanceData(payload));
     } catch (error) {
-      // console.error("socketChannel error:", error);
       socketChannel.close();
       break;
     }

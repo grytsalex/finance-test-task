@@ -49,10 +49,8 @@ function getQuotes(socket) {
 }
 
 function trackTickers(socket) {
-  // run the first time immediately
   getQuotes(socket);
 
-  // every N seconds
   const timer = setInterval(function () {
     getQuotes(socket);
   }, FETCH_INTERVAL);
@@ -71,10 +69,6 @@ const socketServer = io(server, {
     origin: "*",
   },
 });
-
-// app.get('/', function(req, res) {
-//   res.sendFile(__dirname + '/index.html');
-// });
 
 socketServer.on("connection", (socket) => {
   socket.on("start", () => {

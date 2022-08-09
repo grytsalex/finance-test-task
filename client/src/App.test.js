@@ -18,7 +18,6 @@ describe("With React Testing Library", () => {
         <App />
       </Provider>
     );
-    // console.log(wrapper.debug());
     expect(wrapper.find(".loader").length).toBeGreaterThan(0);
   });
 

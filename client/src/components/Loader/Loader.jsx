@@ -1,9 +1,9 @@
 import { CircularProgress, Box } from "@mui/material";
-import { loader } from "./loader.module.scss";
+import styles from "./loader.module.scss";
 
 export const Loader = () => {
   return (
-    <Box className={loader}>
+    <Box className={styles.loader}>
       <CircularProgress thickness={5} size={100} />
     </Box>
   );

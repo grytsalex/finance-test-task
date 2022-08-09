@@ -2,16 +2,16 @@ import { memo } from "react";
 import { Chip } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { arrowUp, arrowDown } from "./percentage.module.scss";
+import styles from "./percentage.module.scss";
 
 export const Percentage = memo(({ isNewPriceBigger, percent }) => {
   return (
     <Chip
       icon={
         isNewPriceBigger ? (
-          <ArrowUpwardIcon className={arrowUp} />
+          <ArrowUpwardIcon className={styles.arrowUp} />
         ) : (
-          <ArrowDownwardIcon className={arrowDown} />
+          <ArrowDownwardIcon className={styles.arrowDown} />
         )
       }
       label={`${percent}%`}
